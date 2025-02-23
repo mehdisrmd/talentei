@@ -90,10 +90,7 @@ class _UsernameLoginFormPageState extends State<UsernameLoginFormPage>
                       ),
                     ),
                     SizedBox(width: 5),
-                    Icon(
-                      Icons.check_circle,
-                      color: Color(0xFF046C4E),
-                    ),
+                    Icon(Icons.check_circle, color: Color(0xFF046C4E)),
                   ],
                 ),
               ),
@@ -103,11 +100,11 @@ class _UsernameLoginFormPageState extends State<UsernameLoginFormPage>
         )
         .closed
         .then((_) {
-      _animationController.reverse(); // Reverse animation
-      setState(() {
-        _isBlurred = false; // Disable blur after SnackBar closes
-      });
-    });
+          _animationController.reverse(); // Reverse animation
+          setState(() {
+            _isBlurred = false; // Disable blur after SnackBar closes
+          });
+        });
   }
 
   @override
@@ -124,7 +121,7 @@ class _UsernameLoginFormPageState extends State<UsernameLoginFormPage>
               gradient: LinearGradient(
                 colors: [
                   Colors.lightBlueAccent.shade200,
-                  Colors.deepPurpleAccent.shade200
+                  Colors.deepPurpleAccent.shade200,
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -151,7 +148,9 @@ class _UsernameLoginFormPageState extends State<UsernameLoginFormPage>
                         color: Colors.white,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: 33, horizontal: 31),
+                            vertical: 33,
+                            horizontal: 31,
+                          ),
                           child: Column(
                             children: [
                               Row(
@@ -174,7 +173,7 @@ class _UsernameLoginFormPageState extends State<UsernameLoginFormPage>
                                         ),
                                       ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                               Container(
@@ -282,15 +281,16 @@ class _UsernameLoginFormPageState extends State<UsernameLoginFormPage>
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     shape: WidgetStatePropertyAll<
-                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder
+                                    >(
                                       RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                     backgroundColor:
                                         WidgetStatePropertyAll<Color>(
-                                      GeneralColor.buttonFormColor,
-                                    ),
+                                          GeneralColor.buttonFormColor,
+                                        ),
                                   ),
                                   onPressed: () {
                                     if (usernameController.text.isNotEmpty &&
@@ -312,6 +312,8 @@ class _UsernameLoginFormPageState extends State<UsernameLoginFormPage>
                                   ),
                                 ),
                               ),
+
+                              ///sfesefsfws
                               SizedBox(height: 20),
                               InkWell(
                                 onTap: () {
@@ -346,9 +348,7 @@ class _UsernameLoginFormPageState extends State<UsernameLoginFormPage>
             Positioned.fill(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                child: Container(
-                  color: Colors.black.withOpacity(0.2),
-                ),
+                child: Container(color: Colors.black.withOpacity(0.2)),
               ),
             ),
         ],
