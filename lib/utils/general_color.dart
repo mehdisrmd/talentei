@@ -9,4 +9,6 @@ class GeneralColor {
   static const hintFormColor = Color(0XFF4426F80);
   static const textFormColor = Color(0XFF04426F);
   static const buttonFormColor = Color(0XFF3D5A80);
+  static const drawerIconColor = Color(0XFF353639);
+  static const headerTitleColor = Color(0XFF0C6D95);
 }
