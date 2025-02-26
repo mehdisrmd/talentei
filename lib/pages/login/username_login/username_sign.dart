@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:talentei/pages/login/number_login/enter_number.dart';
 import 'package:talentei/utils/general_color.dart';
 import 'package:talentei/widgets/sign_form_inpu.dart';
 
