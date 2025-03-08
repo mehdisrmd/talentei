@@ -1,0 +1,20 @@
+library docLib;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+part 'header_section.dart';
+part 'normal_widgets/action_buttons.dart';
+part 'normal_widgets/appointment_section.dart';
+part 'normal_widgets/calender_section.dart';
+part 'normal_widgets/doctor_info_section.dart';
+part 'normal_widgets/location_section.dart';
+part 'normal_widgets/profile_header.dart';
+part 'normal_widgets/review_section.dart';
+part 'shimmer_widgets/action_buttons.dart';
+part 'shimmer_widgets/appointment_section.dart';
+part 'shimmer_widgets/doctor_info_section.dart';
+part 'shimmer_widgets/location_section.dart';
+part 'shimmer_widgets/profile_header.dart';
+part 'shimmer_widgets/reviews_section.dart';
