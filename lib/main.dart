@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:talentei/pages/login/number_login/enter_number.dart';
+import 'package:talentei/pages/doctor_shimmer_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+      themeMode: ThemeMode.light,
       theme: ThemeData(
         fontFamily: 'Dana',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: NumberFormPage(),
+      home: DoctorProfileWithLoader(),
     );
   }
 }

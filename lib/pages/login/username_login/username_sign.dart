@@ -3,6 +3,8 @@ import 'package:talentei/utils/general_color.dart';
 import 'package:talentei/widgets/sign_form_inpu.dart';
 
 class UsernameSignFormPage extends StatefulWidget {
+  const UsernameSignFormPage({super.key});
+
   @override
   State<UsernameSignFormPage> createState() => _UsernameSignFormPageState();
 }

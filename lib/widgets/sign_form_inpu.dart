@@ -14,7 +14,7 @@ class SignFormInput extends StatelessWidget {
   final String? Function(String?)? validation;
   final bool isValid; // Add this new property
 
-  SignFormInput({
+  const SignFormInput({super.key, 
     required this.hint,
     required this.controller,
     required this.icon,

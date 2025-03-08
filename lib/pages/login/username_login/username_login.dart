@@ -5,6 +5,8 @@ import 'package:talentei/utils/general_color.dart';
 import 'package:talentei/widgets/sign_form_inpu.dart';
 
 class UsernameLoginFormPage extends StatefulWidget {
+  const UsernameLoginFormPage({super.key});
+
   @override
   State<UsernameLoginFormPage> createState() => _UsernameLoginFormPageState();
 }

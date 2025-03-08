@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GlobalProfile extends StatelessWidget {
+class GlobalProfile extends StatelessWidget implements PreferredSizeWidget {
   const GlobalProfile({
     super.key,
   });
@@ -24,4 +24,7 @@ class GlobalProfile extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => Size(50, 50);
 }

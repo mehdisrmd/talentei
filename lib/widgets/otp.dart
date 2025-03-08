@@ -6,7 +6,7 @@ import 'package:talentei/widgets/timer_counter.dart';
 
 class PinputExample extends StatefulWidget {
   final Function(String)? onCompleted;
-  const PinputExample({Key? key, this.onCompleted}) : super(key: key);
+  const PinputExample({super.key, this.onCompleted});
 
   @override
   State<PinputExample> createState() => _PinputExampleState();

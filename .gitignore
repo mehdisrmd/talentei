@@ -11,6 +11,7 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
+lib/pages/doctor_shimmer_page.dart
 
 # IntelliJ related
 *.iml

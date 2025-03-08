@@ -5,7 +5,7 @@ import 'package:talentei/utils/general_color.dart';
 import 'package:talentei/widgets/sign_form_inpu.dart';
 
 class NumberFormPage extends StatefulWidget {
-  NumberFormPage({super.key});
+  const NumberFormPage({super.key});
 
   @override
   State<NumberFormPage> createState() => _NumberFormPageState();
