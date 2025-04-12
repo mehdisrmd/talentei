@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:talentei/pages/doctor_shimmer_page.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:talentei/pages/payment/payment.dart';
+
+import 'package:talentei/pages/result/test_result.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +17,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       themeMode: ThemeMode.light,
+      supportedLocales: const [
+        Locale("fa", "IR"),
+      ],
+      localizationsDelegates: [
+        // Add Localization
+        PersianMaterialLocalizations.delegate,
+        PersianCupertinoLocalizations.delegate,
+      ],
       theme: ThemeData(
         fontFamily: 'Dana',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -25,7 +36,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: DoctorProfileWithLoader(),
+      home: PaymentPage(),
     );
   }
 }

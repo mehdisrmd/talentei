@@ -36,7 +36,7 @@ class DoctorInfoSectionWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Colors.teal, size: 18),
+          Icon(icon, color: GeneralColor.textFormColor, size: 18),
           const SizedBox(width: 10),
           Expanded(
             child: Text(

@@ -3,8 +3,10 @@ import 'package:talentei/utils/global_profile.dart';
 import 'package:talentei/widgets/doctor_info/library.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+enum OppointmentType { online, phone, inPerson }
+
 class DoctorProfilePage extends StatelessWidget {
-  const DoctorProfilePage({Key? key}) : super(key: key);
+  const DoctorProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class DoctorProfilePage extends StatelessWidget {
                 DoctorInfoSectionWidget(),
                 LocationSectionWidget(),
                 ReviewSectionWidget(),
-                CalenderSectionWidget(),
+                // CalenderSectionWidget(),
               ],
             ),
           ),

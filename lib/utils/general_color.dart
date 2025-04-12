@@ -12,3 +12,18 @@ class GeneralColor {
   static const drawerIconColor = Color(0XFF353639);
   static const headerTitleColor = Color(0XFF0C6D95);
 }
+
+class AppColors {
+  static const Color primaryColor = Color(0xFF0C6D95);
+  static const Color primaryBtnColor = Color(0xFF3D5A80);
+  static const Color secondaryColor = Color(0xFFFD8B51);
+  static const Color background = Color(0xFFF4F5F6);
+  static const Color secondaryBackground = Color(0xFFE7E8F4);
+  static const Color secondaryButtonColor = Color(0xFF50A2C8);
+  static const Color extraBackground = Color(0xFFFAFAFA);
+  static const Color positiveAlert = Color(0xFF36CA5F);
+  static const Color negativeAlert = Color(0xFFDC3636);
+  static const Color warningAlert = Color(0xFFFFED77);
+  static const Color linkAndInfo = Color(0xFF3366FF);
+  static const Color textDark = Color(0xFF353639);
+}

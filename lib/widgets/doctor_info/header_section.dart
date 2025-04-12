@@ -24,14 +24,17 @@ class HeaderSection extends StatelessWidget {
           Container(
             width: 3,
             height: 20,
-            color: Colors.teal,
+            color: AppColors.secondaryColor,
             margin: const EdgeInsets.only(left: 8),
           ),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 16,
+            textAlign: TextAlign.justify,
+            textDirection: TextDirection.rtl,
+            style: TextStyle(
               fontWeight: FontWeight.bold,
+              fontSize: 16,
+              height: 30 / 16,
             ),
           ),
         ],
