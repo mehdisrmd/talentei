@@ -26,4 +26,7 @@ class AppColors {
   static const Color warningAlert = Color(0xFFFFED77);
   static const Color linkAndInfo = Color(0xFF3366FF);
   static const Color textDark = Color(0xFF353639);
+  static const Color borderColor = Color.fromARGB(255, 58, 212, 53);
+
+  static var contentColorCyan;
 }

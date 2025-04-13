@@ -1,10 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
-import 'package:talentei/pages/payment/payment.dart';
+import 'package:logger/logger.dart';
+import 'package:talentei/pages/feedback_doctor.dart';
 
 import 'package:talentei/pages/result/test_result.dart';
 
+var logger = Logger(
+  printer: PrettyPrinter(),
+);
+
+var loggerNoStack = Logger(
+  printer: PrettyPrinter(methodCount: 0),
+);
+void demo() {
+  logger.d('Log message with 2 methods');
+
+  loggerNoStack.i('Info message');
+
+  loggerNoStack.w('Just a warning!');
+
+  logger.e('Error! Something bad happened', error: 'Test Error');
+
+  loggerNoStack.t({'key': 5, 'value': 'something'});
+
+  Logger(printer: SimplePrinter(colors: true)).t('boom');
+}
+
 void main() {
+  demo();
   runApp(const MyApp());
 }
 
@@ -36,7 +59,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: PaymentPage(),
+      home: FeedBackPage(),
     );
   }
 }

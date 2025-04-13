@@ -139,14 +139,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_radar_chart:
-    dependency: "direct main"
-    description:
-      name: flutter_radar_chart
-      sha256: c98b635de2e3f5b0b1300093023845825b616c8e523776a8a3a714c28f23f211
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.1"
   flutter_rating_bar:
     dependency: "direct dev"
     description:
@@ -173,14 +165,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  graphic:
-    dependency: "direct main"
-    description:
-      name: graphic
-      sha256: bded9411106d488b8b26bb6984d566115c07a7a4efb257e3fbf2956df6c2c789
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.1"
   http:
     dependency: transitive
     description:
@@ -237,6 +221,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.1"
+  logger:
+    dependency: "direct main"
+    description:
+      name: logger
+      sha256: be4b23575aac7ebf01f225a241eb7f6b5641eeaf43c6a8613510fc2f8cf187d1
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.0"
   maps_launcher:
     dependency: "direct dev"
     description:
@@ -285,14 +277,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-  path_drawing:
-    dependency: transitive
-    description:
-      name: path_drawing
-      sha256: bbb1934c0cbb03091af082a6389ca2080345291ef07a5fa6d6e078ba8682f977
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   path_parsing:
     dependency: transitive
     description:

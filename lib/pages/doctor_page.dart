@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:talentei/utils/global_profile.dart';
+import 'package:talentei/utils/golobal_appbar.dart';
 import 'package:talentei/widgets/doctor_info/library.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum OppointmentType { online, phone, inPerson }
+enum AppointmentType { online, phone, inPerson }
 
 class DoctorProfilePage extends StatelessWidget {
   const DoctorProfilePage({super.key});
@@ -14,20 +15,7 @@ class DoctorProfilePage extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: Color(0xFFF8F9FA),
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: SvgPicture.asset('assets/icons/menu.svg'),
-            onPressed: () {},
-          ),
-          actions: [
-            GlobalProfile(),
-            SizedBox(
-              width: 15,
-            ),
-          ],
-        ),
+        appBar: CustomAppBar(),
         body: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 19),
