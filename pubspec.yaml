@@ -58,6 +58,7 @@ dev_dependencies:
   maps_launcher: ^3.0.0+1
   bloc: ^9.0.0
   flutter_bloc: ^9.1.0
+  fluttertoast: ^8.2.12
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
