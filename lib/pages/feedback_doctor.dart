@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class FeedBackPage extends StatefulWidget {
   const FeedBackPage({Key? key}) : super(key: key);
@@ -10,7 +11,11 @@ class FeedBackPage extends StatefulWidget {
 
 class _FeedBackPageState extends State<FeedBackPage>
     with SingleTickerProviderStateMixin {
+  final TextEditingController commentController = TextEditingController();
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  FToast fToast = FToast();
   double _rating = 3.0;
+  bool comment = false;
   final Map<String, bool> _satisfactionItems = {
     'نظافت مطب': false,
     'امکانات رفاهی': false,
@@ -18,6 +23,14 @@ class _FeedBackPageState extends State<FeedBackPage>
     'نسخه الکترونیکی': false,
     'رفتار مناسب': false,
     'زمان انتظار در مطب': false,
+  };
+  final Map<String, bool> _dissatisactionItems = {
+    'نظافت مطب': false,
+    'امکانات رفاهی': false,
+    'تشخیص درست': false,
+    'نسخه الکترونیکی': false,
+    'رفتار مناسب': false,
+    'زمان انتظار': false,
   };
 
   late TabController _tabController;
@@ -28,6 +41,11 @@ class _FeedBackPageState extends State<FeedBackPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    fToast = FToast();
+    // We'll initialize fToast after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fToast.init(context);
+    });
   }
 
   @override
@@ -66,7 +84,60 @@ class _FeedBackPageState extends State<FeedBackPage>
               _buildRatingSection(),
               const SizedBox(height: 16),
               _buildTabSection(),
-              const SizedBox(height: 24),
+              Divider(
+                color: Colors.grey.shade300,
+                thickness: 1,
+                height: 1,
+              ),
+              const SizedBox(height: 16),
+              Builder(
+                builder: (BuildContext context) => InkWell(
+                  onTap: () => Scaffold.of(context).showBottomSheet(
+                    (context) => customBottomSheet(
+                      commentController: commentController,
+                      comment: (value) {
+                        setState(() {
+                          comment = value;
+                        });
+                      },
+                    ),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 40,
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFf8f9fd),
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 16),
+                        Icon(Icons.comment, color: Colors.black87),
+                        SizedBox(width: 5),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .65,
+                          child: Text(
+                            comment
+                                ? '${commentController.text}'
+                                : 'نوشتن نظر در باره این دکتر',
+                            maxLines: 1, // Limit the number of lines
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                TextStyle(color: Colors.black87, fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
               _buildSubmitButton(),
               const SizedBox(height: 24),
             ],
@@ -83,7 +154,7 @@ class _FeedBackPageState extends State<FeedBackPage>
       child: Column(
         children: [
           Container(
-            width: 100,
+            width: MediaQuery.of(context).size.width,
             height: 100,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -119,7 +190,7 @@ class _FeedBackPageState extends State<FeedBackPage>
           ),
           const SizedBox(height: 16),
           const Text(
-            "کاربر گرامی ضمن آرزوی سلامتی برای شما ؛ لطفا امتیاز خود را نسبت به خدمات دکتر بهرام میرزایی ثبت",
+            "کاربر گرامی ضمن آرزوی سلامتی برای شما ؛ لطفا امتیاز خود را نسبت به خدمات دکتر بهرام میرزایی ثبت کنیدس",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14,
@@ -133,35 +204,41 @@ class _FeedBackPageState extends State<FeedBackPage>
 
   Widget _buildRatingSection() {
     return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 120,
       color: Colors.white,
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          RatingBar.builder(
-            initialRating: _rating,
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: true,
-            itemCount: 5,
-            itemSize: 48,
-            unratedColor: Colors.grey[300],
-            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            itemBuilder: (context, _) => const Icon(
-              Icons.star,
-              color: Colors.amber,
+          FittedBox(
+            fit: BoxFit.fitWidth,
+            child: RatingBar.builder(
+              initialRating: _rating,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: false,
+              itemCount: 5,
+              itemSize: 48,
+              glow: false,
+              unratedColor: Colors.grey[300],
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) => const Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
+              onRatingUpdate: (rating) {
+                setState(() {
+                  _rating = rating;
+                });
+              },
             ),
-            onRatingUpdate: (rating) {
-              setState(() {
-                _rating = rating;
-              });
-            },
           ),
           const SizedBox(height: 8),
           Text(
             _getRatingText(),
             style: TextStyle(
               fontSize: 16,
-              color: _getRatingColor(),
+              color: Colors.black87,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -171,17 +248,11 @@ class _FeedBackPageState extends State<FeedBackPage>
   }
 
   String _getRatingText() {
+    if (_rating >= 5) return 'خیلی عالی';
     if (_rating >= 4) return 'عالی';
     if (_rating >= 3) return 'خوب';
     if (_rating >= 2) return 'متوسط';
     return 'ضعیف';
-  }
-
-  Color _getRatingColor() {
-    if (_rating >= 4) return Colors.green;
-    if (_rating >= 3) return Colors.blue;
-    if (_rating >= 2) return Colors.orange;
-    return Colors.red;
   }
 
   Widget _buildTabSection() {
@@ -205,7 +276,7 @@ class _FeedBackPageState extends State<FeedBackPage>
               controller: _tabController,
               children: [
                 _buildSatisfactionTab(),
-                _buildReviewTab(),
+                _buildDisSatisfactionTab(),
               ],
             ),
           ),
@@ -214,79 +285,122 @@ class _FeedBackPageState extends State<FeedBackPage>
     );
   }
 
-  Widget _buildSatisfactionTab() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'از کدام موارد رضایت داشته اید؟',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+  Widget _buildDisSatisfactionTab() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'از کدام موارد رضایت نداشته اید؟',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: _satisfactionItems.entries.map((entry) {
-              return FilterChip(
-                label: Text(entry.key),
-                selected: entry.value,
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  side: BorderSide(color: Colors.grey.shade300),
-                ),
-                selectedColor: Colors.blue.shade50,
-                checkmarkColor: Colors.blue,
-                onSelected: (bool selected) {
-                  setState(() {
-                    _satisfactionItems[entry.key] = selected;
-                  });
-                },
-              );
-            }).toList(),
-          ),
-        ],
+            const SizedBox(height: 16),
+            GridView.count(
+              physics:
+                  NeverScrollableScrollPhysics(), // Add if inside SingleChildScrollView
+              crossAxisCount: 2,
+              crossAxisSpacing: 30,
+              mainAxisSpacing: 5,
+              // --- ADJUSTED: Smaller ratio makes items taller ---
+              childAspectRatio:
+                  2.6, // Experiment with values like 2.0, 2.5, 3.0
+              shrinkWrap: true,
+              children: _dissatisactionItems.entries.map((entry) {
+                // --- REMOVED Restrictive SizedBox ---
+                // No SizedBox needed here unless you want a *minimum* size
+                return FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: FilterChip(
+                    materialTapTargetSize:
+                        MaterialTapTargetSize.padded, // Default size (48x48)
+                    // --- REMOVED visualDensity ---
+                    // visualDensity: VisualDensity.compact,
+                    // --- ADJUSTED Padding ---
+                    label: Text(
+                      entry.key,
+                      // --- ADJUSTED FontSize ---
+                      style: TextStyle(fontSize: 12), // Increased font size
+                    ),
+                    selected: entry.value,
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    selectedColor: Colors.blue.shade50,
+                    checkmarkColor: const Color(0xFFDC3636),
+                    onSelected: (bool selected) {
+                      setState(() {
+                        _dissatisactionItems[entry.key] = selected;
+                      });
+                    },
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildReviewTab() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'نظر خود را بنویسید',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _reviewController,
-            maxLines: 5,
-            decoration: InputDecoration(
-              hintText: 'نظر خود را اینجا بنویسید...',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey.shade300),
+  Widget _buildSatisfactionTab() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'از کدام موارد رضایت داشته اید؟',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey.shade300),
-              ),
-              filled: true,
-              fillColor: Colors.grey.shade50,
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            GridView.count(
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              crossAxisSpacing: 30,
+              mainAxisSpacing: 5,
+              childAspectRatio: 2.6,
+              shrinkWrap: true,
+              children: _satisfactionItems.entries.map((entry) {
+                return FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: FilterChip(
+                    materialTapTargetSize: MaterialTapTargetSize.padded,
+                    label: Text(
+                      entry.key,
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    selected: entry.value,
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    selectedColor: Colors.blue.shade50,
+                    checkmarkColor: Color(0xFF36CA5F),
+                    onSelected: (bool selected) {
+                      setState(() {
+                        _satisfactionItems[entry.key] = selected;
+                      });
+                    },
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -311,9 +425,11 @@ class _FeedBackPageState extends State<FeedBackPage>
                 elevation: 0,
               ),
               child: _submitting
-                  ? const CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 3,
+                  ? FittedBox(
+                      child: const CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 3,
+                      ),
                     )
                   : const Text(
                       'ثبت بازخورد',
@@ -330,40 +446,171 @@ class _FeedBackPageState extends State<FeedBackPage>
   }
 
   void _submitRating() {
-    // Show loading state
     setState(() {
       _submitting = true;
     });
 
-    // Simulate API call
     Future.delayed(const Duration(seconds: 2), () {
-      // Here you would typically send data to your backend
-      // Rating: _rating
-      // Satisfaction items: _satisfactionItems
-      // Review: _reviewController.text
-
       setState(() {
         _submitting = false;
       });
 
-      // Show success dialog
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('موفقیت'),
-          content:
-              const Text('نظر شما با موفقیت ثبت شد. از همکاری شما متشکریم.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                // Here you might want to navigate back
-              },
-              child: const Text('تایید'),
-            ),
-          ],
+      fToast.showToast(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25.0),
+            color: Colors.greenAccent,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.check),
+              SizedBox(width: 12.0),
+              Text("نظر شما با موفقیت ثبت شد"),
+            ],
+          ),
         ),
+        gravity: ToastGravity.BOTTOM,
+        toastDuration: Duration(seconds: 2),
       );
+
+      // Show success dialog
     });
+  }
+}
+
+class customBottomSheet extends StatelessWidget {
+  customBottomSheet({
+    Key? key,
+    required this.commentController,
+    required this.comment,
+  }) : super(key: key);
+
+  final TextEditingController commentController;
+  ValueChanged<bool> comment;
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Directionality(
+        textDirection: TextDirection.rtl, // For Persian language
+        child: Container(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10,
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Bottom sheet handle
+              Container(
+                margin: const EdgeInsets.only(top: 12, bottom: 8),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+
+              // Header
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        commentController.clear();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    const Expanded(
+                      child: Center(
+                        child: Text(
+                          'نوشتن نظر دربارهٔ این دکتر',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 48), // For balance
+                  ],
+                ),
+              ),
+
+              // Comment input field
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0XFF353639), width: 1.5),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextField(
+                    controller: commentController,
+                    maxLines: 4,
+                    maxLength: 512,
+                    decoration: const InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                      border: InputBorder.none,
+                      hintText: 'نظر خود را بنویسید...',
+                      hintStyle: TextStyle(
+                        color: Color(0XFF353639),
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Submit button
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Submit comment logic here
+                    Navigator.of(context).pop(commentController.text);
+                    comment(true);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0XFF0C6D95),
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
+                    'ثبت نظر',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
