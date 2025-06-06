@@ -90,8 +90,13 @@ class _ImajPageState extends State<ImajPage> {
                               margin: const EdgeInsets.all(16.0),
                               decoration: BoxDecoration(
                                 color: Colors.black,
+                                border: Border.all(
+                                  color: const Color(0xFFabc6e0),
+                                  width: 1,
+                                ),
                                 borderRadius: BorderRadius.circular(12),
                               ),
+
                               // SYNTAX FIX: 'child' is a property of Container, not BoxDecoration
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -627,4 +632,3 @@ class _ImajPageState extends State<ImajPage> {
     );
   }
 }
-//hi
